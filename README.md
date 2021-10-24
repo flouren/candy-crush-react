@@ -1,7 +1,7 @@
 # Project of Candy Crush game in React with Anna Kubowa
 
 [Candy Crush in React](https://www.youtube.com/watch?v=PBrEq9Wd6_U)
-last point => [00:11:37]
+last point => [00:44:50]
 
 
 # Getting Started with Create React App
