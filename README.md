@@ -1,3 +1,9 @@
+# Project of Candy Crush game in React with Anna Kubowa
+
+[Candy Crush in React](https://www.youtube.com/watch?v=PBrEq9Wd6_U)
+last point => [00:04:15]
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
