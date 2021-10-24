@@ -1,4 +1,5 @@
 import './App.css';
+import {useState} from "react";
 
 const width = 8
 const candyColours = [
@@ -12,11 +13,22 @@ const candyColours = [
 
 const App = () => {
 
+    const [currentColorArrangement,setColorArrangement] = useState()
+
     const createBoard = () => {
+
+        const randomColorArrangement = []
         for (let i=0;i<width * width; i++){
-            const randomColor = candyColours[Math.floor(Math.random()*candyColours.length)]
+            const randomNumberFrom0to5 = Math.floor(Math.random() * candyColours.length)
+            const randomColor = candyColours[randomNumberFrom0to5]
+            randomColorArrangement.push(randomColor)
         }
+        // console.log(randomColorArrangement)
+        setColorArrangement(randomColorArrangement)
+        console.log(currentColorArrangement)
     }
+
+    createBoard()
 
   return (
     <div className="App">
