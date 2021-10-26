@@ -87,6 +87,14 @@ const checkForRowOfFour = () =>{
 
 const moveIntoSquareBelow = () => {
   for (let i = 0; i < 64-width; i++) {
+    const firstRow = [0,1,2,3,4,5,6,7]
+    const isFirstRow = firstRow.includes(i)
+
+    if(isFirstRow && currentColorArrangement[i] === ''){
+      let randomNumber = Math.floor(Math.random() * candyColours.length)
+      currentColorArrangement[i] = candyColours[randomNumber] 
+    }
+
     if((currentColorArrangement[i + width]) === ''){
       currentColorArrangement[i+width] = currentColorArrangement[i]
       currentColorArrangement[i] = ''
@@ -95,9 +103,19 @@ const moveIntoSquareBelow = () => {
   }
 }
 
+const dragStart = () => {}
+
+const dragDrop = () => {}
+
+const dragEnd = () => {}
 
 
 
+
+
+/**
+ *  useEffect to create board game
+ */
       useEffect(() => {
         createBoard()
         // console.log('useEffect calls');
@@ -118,11 +136,12 @@ const moveIntoSquareBelow = () => {
           checkForColumnOfThree()
           checkForRowOfFour()
           checkForRowOfThree()
+          moveIntoSquareBelow()
           setCurrentColorArrangement([...currentColorArrangement])
           // console.log('Checking for threes and fours ..');
         }, 100);
         return ()=>clearInterval(timer)
-      }, [checkForColumnOfFour,checkForColumnOfThree,checkForRowOfThree,currentColorArrangement])
+      }, [checkForColumnOfFour,checkForColumnOfThree,checkForRowOfThree,moveIntoSquareBelow,currentColorArrangement])
       
 
 
@@ -136,6 +155,14 @@ const moveIntoSquareBelow = () => {
             key={index}
             style={{backgroundColor:candyColours}}
             alt={candyColours}
+            data-id={index}
+            onDragStart={dragStart}
+            draggable={true}
+            onDragOver={(e)=>e.preventDefault()}
+            onDragEnter={(e)=>e.preventDefault()}
+            onDragLeave={(e)=>e.preventDefault()}
+            onDrop={dragDrop}
+            onDragEnd={dragEnd}
           >
           </img>
         ))}
