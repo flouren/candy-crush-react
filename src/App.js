@@ -14,6 +14,8 @@ const candyColours = [
 const App = () => {
 
     const [currentColorArrangement,setCurrentColorArrangement] = useState([])
+    const [squareBeingDragged,setSquareBeingDragged] = useState(null)
+    const [squareBeingReplaced,setSquareBeingReplaced] = useState(null)
 
     // Function that creates game board
     const createBoard = () => {
@@ -30,12 +32,13 @@ const App = () => {
 
     // Function that checks three imgs in col
     const checkForColumnOfThree = () =>{
-      for (let i = 0; i < 47; i++) {
+      for (let i = 0; i <= 47; i++) {
         const columnOfThree = [i, i+width, i+width*2]
         const decidedColor = currentColorArrangement[i]
 
         if(columnOfThree.every(square => currentColorArrangement[square] === decidedColor)){
           columnOfThree.forEach(square=>currentColorArrangement[square] = '')
+          return true
         }
     }
   }   
@@ -43,12 +46,13 @@ const App = () => {
 
     // Function that checks four imgs in col
     const checkForColumnOfFour = () =>{
-      for (let i = 0; i < 39; i++) {
+      for (let i = 0; i <= 39; i++) {
         const columnOfFour = [i, i+width, i+width*2,i+width*3]
         const decidedColor = currentColorArrangement[i]
 
         if(columnOfFour.every(square => currentColorArrangement[square] === decidedColor)){
           columnOfFour.forEach(square=>currentColorArrangement[square] = '')
+          return true
         }
     }
   }   
@@ -66,6 +70,7 @@ const App = () => {
 
       if(rowOfThree.every(square => currentColorArrangement[square] === decidedColor)){
         rowOfThree.forEach(square=>currentColorArrangement[square] = '')
+        return true
       }
   }
 }  
@@ -81,12 +86,13 @@ const checkForRowOfFour = () =>{
 
     if(rowOfFour.every(square => currentColorArrangement[square] === decidedColor)){
       rowOfFour.forEach(square=>currentColorArrangement[square] = '')
+      return true
     }
 }
 }   
 
 const moveIntoSquareBelow = () => {
-  for (let i = 0; i < 64-width; i++) {
+  for (let i = 0; i <= 55; i++) {
     const firstRow = [0,1,2,3,4,5,6,7]
     const isFirstRow = firstRow.includes(i)
 
@@ -103,11 +109,46 @@ const moveIntoSquareBelow = () => {
   }
 }
 
-const dragStart = () => {}
+const dragStart = (e) => {
+  console.log(e.target);
+  console.log('drag start');
+  setSquareBeingDragged(e.target)
+}
 
-const dragDrop = () => {}
+const dragDrop = (e) => {
+  console.log(e.target);
+  console.log('drag drop');
+  setSquareBeingReplaced(e.target)
+  
+}
 
-const dragEnd = () => {}
+  const dragEnd = (e) => {
+    console.log(e.target);
+    console.log('drag end');
+    const squareBeingDraggedId = parseInt(squareBeingDragged.getAttribute('data-id'))
+    const squareBeingReplacedId = parseInt(squareBeingReplaced.getAttribute('data-id'))
+
+    currentColorArrangement[squareBeingReplacedId] = squareBeingDragged.style.backgroundColor
+    currentColorArrangement[squareBeingDraggedId] = squareBeingReplaced.style.backgroundColor
+
+    console.log(squareBeingDraggedId);
+    console.log(squareBeingReplacedId);
+
+    const validMoves = [
+      squareBeingDraggedId -1,
+      squareBeingDraggedId - width,
+      squareBeingDraggedId +1,
+      squareBeingDraggedId + width
+    ]
+
+    const validMove = validMoves.includes(squareBeingDraggedId)
+
+    const isAColumnOfFour = checkForColumnOfFour()
+    const isAColumnOfThree = checkForColumnOfThree()
+    const isARowOfFour = checkForRowOfFour()
+    const isARowOfThree = checkForRowOfThree()
+
+  }
 
 
 
